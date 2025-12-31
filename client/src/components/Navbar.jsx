@@ -1,0 +1,111 @@
+import React from "react";
+import { Link } from "react-router-dom";
+const Navbar = () => {
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Movies", path: "/movies" },
+    { name: "Theaters", path: "/" },
+    { name: "Releases", path: "/" },
+    { name: "Favorites", path: "/favorite" },
+  ];
+  const [isScrolled, setIsScrolled] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  return (
+    <div>
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 
+      ${
+        isScrolled
+          ? "bg-black shadow-md backdrop-blur-md text-white"
+          : "bg-transparent text-white"
+      }`}
+      >
+        <div className="flex items-center justify-between px-4 sm:px-6 md:px-16 lg:px-32 py-4 gap-4">
+          {/* logo */}
+          <Link to="/" className="flex-shrink-0">
+            <span className="text-primary text-[24px] sm:text-[32px] md:text-[50px]">
+              B
+              <span className="text-white text-[19px] sm:text-[26px] md:text-[40px]">
+                ook
+              </span>
+              <span>S</span>
+              <span className="text-white text-[19px] sm:text-[26px] md:text-[40px]">
+                how
+              </span>
+            </span>
+          </Link>
+          <div className="hidden min-[868px]:flex items-center gap-8 bg-white/20 backdrop-blur border px-6 py-1 rounded-3xl flex-shrink-0">
+            {/* nav link */}
+            {navLinks.map((link, index) => (
+              <Link
+                key={index}
+                to={link.path}
+                className=" flex flex-col gap-1 pt-1 "
+              >
+                {link.name}
+                <span
+                  className={` 
+                ${isScrolled ? "bg-gray-800" : "bg-white"}`}
+                />
+              </Link>
+            ))}
+          </div>
+          {/* login btn */}
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <button className="px-5 sm:px-6 md:px-8 py-2 rounded-full transition-all duration-500 bg-primary text-sm sm:text-base whitespace-nowrap">
+              Login
+            </button>
+            {/* menu btn */}
+            <button
+              className="min-[868px]:hidden cursor-pointer flex-shrink-0"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <svg
+                className="h-7 w-7"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <line x1="4" y1="6" x2="20" y2="6" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="18" x2="20" y2="18" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        {/* mobile menu */}
+        <div
+          className={`fixed top-0 left-0 w-full h-screen bg-transparent backdrop-blur-2xl text-white z-40
+        flex flex-col items-center justify-center gap-8 text-xl transition-transform duration-500
+        ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
+        >
+          <button
+            className="absolute top-5 right-5 cursor-pointer"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            ✕
+          </button>
+          {/* mobile menu link */}
+          {navLinks.map((link, index) => (
+            <Link
+              key={index}
+              to={link.path}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+      </nav>
+    </div>
+  );
+};
+export default Navbar;
