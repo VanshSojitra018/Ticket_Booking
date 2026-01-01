@@ -1,13 +1,8 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import assets from "../assets/assets.js";
-import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
-import { TicketPlus } from "lucide-react";
 
 const Navbar = () => {
-  const { user } = useUser();
-  const { openSignIn } = useClerk();
-const navigate = useNavigate()
 
 
 
@@ -60,24 +55,12 @@ const navigate = useNavigate()
           </div>
           {/* login btn */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {!user ? (
-              <button
-                onClick={openSignIn}
+            <button
+                
                 className="px-5 cursor-pointer sm:px-6 md:px-8 py-2 rounded-full transition-all duration-500 bg-primary text-sm sm:text-base whitespace-nowrap"
               >
                 Login
               </button>
-            ) : (
-              <UserButton>
-                <UserButton.MenuItems>
-                  <UserButton.Action
-                    label="My Bookings"
-                    labelIcon={<TicketPlus width={15}/>}
-                    onClick={()=> navigate('/my-bookings')}
-                  />
-                </UserButton.MenuItems>
-              </UserButton>
-            )}
 
             {/* menu btn */}
             <button
