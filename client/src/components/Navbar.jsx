@@ -1,6 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import assets from "../assets/assets.js";
+import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
+import { TicketPlus } from "lucide-react";
+
 const Navbar = () => {
+  const { user } = useUser();
+  const { openSignIn } = useClerk();
+const navigate = useNavigate()
+
+
+
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Movies", path: "/movies" },
@@ -27,21 +37,12 @@ const Navbar = () => {
           : "bg-transparent text-white"
       }`}
       >
-        <div className="flex items-center justify-between px-4 sm:px-6 md:px-16 lg:px-32 py-4 gap-4">
+        <div className="flex items-center justify-between px-6 md:px-16 lg:px-36 py-5">
           {/* logo */}
-          <Link to="/" className="flex-shrink-0">
-            <span className="text-primary text-[24px] sm:text-[32px] md:text-[50px]">
-              B
-              <span className="text-white text-[19px] sm:text-[26px] md:text-[40px]">
-                ook
-              </span>
-              <span>S</span>
-              <span className="text-white text-[19px] sm:text-[26px] md:text-[40px]">
-                how
-              </span>
-            </span>
+          <Link to="/" className="max-md:flex-1">
+            <img src={assets.logo} alt="" className="w-36 h-auto" />
           </Link>
-          <div className="hidden min-[868px]:flex items-center gap-8 bg-white/20 backdrop-blur border px-6 py-1 rounded-3xl flex-shrink-0">
+          <div className="hidden min-[868px]:flex items-center gap-8 bg-white/20 backdrop-blur border px-6 py-1 rounded-3xl shrink-0">
             {/* nav link */}
             {navLinks.map((link, index) => (
               <Link
@@ -58,13 +59,29 @@ const Navbar = () => {
             ))}
           </div>
           {/* login btn */}
-          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-            <button className="px-5 sm:px-6 md:px-8 py-2 rounded-full transition-all duration-500 bg-primary text-sm sm:text-base whitespace-nowrap">
-              Login
-            </button>
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {!user ? (
+              <button
+                onClick={openSignIn}
+                className="px-5 cursor-pointer sm:px-6 md:px-8 py-2 rounded-full transition-all duration-500 bg-primary text-sm sm:text-base whitespace-nowrap"
+              >
+                Login
+              </button>
+            ) : (
+              <UserButton>
+                <UserButton.MenuItems>
+                  <UserButton.Action
+                    label="My Bookings"
+                    labelIcon={<TicketPlus width={15}/>}
+                    onClick={()=> navigate('/my-bookings')}
+                  />
+                </UserButton.MenuItems>
+              </UserButton>
+            )}
+
             {/* menu btn */}
             <button
-              className="min-[868px]:hidden cursor-pointer flex-shrink-0"
+              className="min-[868px]:hidden cursor-pointer shrink-0"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <svg
