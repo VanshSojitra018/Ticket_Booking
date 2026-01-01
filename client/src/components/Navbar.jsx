@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import assets from "../assets/assets.js";
 import { useAuth } from "../pages/AuthContext.jsx";
+import { TicketIcon } from "lucide-react";
 
 const Navbar = () => {
   const { user } = useAuth();
@@ -56,7 +57,7 @@ const Navbar = () => {
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {!user && (
               <Link to="/register">
-                <button className="bg-primary text-white px-4 py-1 rounded-full">
+                <button className="bg-primary text-white px-4 py-1 rounded-full cursor-pointer">
                   Login
                 </button>
               </Link>

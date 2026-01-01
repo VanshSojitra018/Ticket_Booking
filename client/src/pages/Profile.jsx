@@ -1,22 +1,27 @@
 import { useAuth } from "./AuthContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const { user, updateUser, logout } = useAuth();
   const navigate = useNavigate();
 
+  // redirect if not logged in
+  useEffect(() => {
+    if (!user) navigate("/login");
+  }, [user, navigate]);
+
+  if (!user) return null; // avoids crash while redirecting
+
   const [form, setForm] = useState(user);
 
   const save = () => {
     updateUser(form);
-    // alert("Profile updated");
   };
 
   const handleLogout = () => {
     logout();
-    // alert("Logged out successfully");
-    navigate("/"); // back to home
+    navigate("/");
   };
 
   return (
@@ -50,7 +55,6 @@ export default function Profile() {
           Update Profile
         </button>
 
-        {/* 🔴 Logout Button */}
         <button
           className="w-full bg-red-500 text-white py-2 rounded"
           onClick={handleLogout}
