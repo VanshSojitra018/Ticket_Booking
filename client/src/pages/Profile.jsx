@@ -1,3 +1,4 @@
+import { TicketIcon } from "lucide-react";
 import { useAuth } from "./AuthContext";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -49,14 +50,18 @@ export default function Profile() {
         />
 
         <button
-          className="w-full bg-primary text-white py-2 rounded mb-3"
+          className="w-full bg-primary text-white py-2 rounded mb-3 cursor-pointer"
           onClick={save}
         >
           Update Profile
         </button>
+        <button onClick={()=> navigate('/my-bookings')} className="w-full cursor-pointer flex items-center gap-2 justify-center bg-primary text-white py-2 rounded mb-3">
+          <TicketIcon/>
+          My Bookings
+        </button>
 
         <button
-          className="w-full bg-red-500 text-white py-2 rounded"
+          className="w-full bg-red-500 text-white py-2 rounded cursor-pointer"
           onClick={handleLogout}
         >
           Logout

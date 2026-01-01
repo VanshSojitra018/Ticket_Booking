@@ -54,7 +54,7 @@ const Navbar = () => {
             ))}
           </div>
           {/* login btn */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 shrink-0">
             {!user && (
               <Link to="/register">
                 <button className="bg-primary text-white px-4 py-1 rounded-full cursor-pointer">
