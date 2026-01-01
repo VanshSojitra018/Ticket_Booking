@@ -1,0 +1,63 @@
+import { useAuth } from "./AuthContext";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function Profile() {
+  const { user, updateUser, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState(user);
+
+  const save = () => {
+    updateUser(form);
+    // alert("Profile updated");
+  };
+
+  const handleLogout = () => {
+    logout();
+    // alert("Logged out successfully");
+    navigate("/"); // back to home
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="p-6 rounded-xl shadow-lg w-full max-w-md">
+
+        <h2 className="text-xl font-semibold mb-4 text-center">Profile</h2>
+
+        <input
+          value={form.username}
+          className="w-full border p-2 rounded mb-3"
+          onChange={(e) => setForm({ ...form, username: e.target.value })}
+        />
+
+        <input
+          value={form.email}
+          className="w-full border p-2 rounded mb-3"
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+        />
+
+        <input
+          value={form.password}
+          className="w-full border p-2 rounded mb-3"
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
+        />
+
+        <button
+          className="w-full bg-primary text-white py-2 rounded mb-3"
+          onClick={save}
+        >
+          Update Profile
+        </button>
+
+        {/* 🔴 Logout Button */}
+        <button
+          className="w-full bg-red-500 text-white py-2 rounded"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  );
+}

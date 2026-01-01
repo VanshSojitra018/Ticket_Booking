@@ -1,11 +1,10 @@
 import React from "react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import assets from "../assets/assets.js";
+import { useAuth } from "../pages/AuthContext.jsx";
 
 const Navbar = () => {
-
-
-
+  const { user } = useAuth();
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Movies", path: "/movies" },
@@ -55,12 +54,21 @@ const Navbar = () => {
           </div>
           {/* login btn */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <button
-                
-                className="px-5 cursor-pointer sm:px-6 md:px-8 py-2 rounded-full transition-all duration-500 bg-primary text-sm sm:text-base whitespace-nowrap"
-              >
-                Login
-              </button>
+            {!user && (
+              <Link to="/register">
+                <button className="bg-primary text-white px-4 py-1 rounded-full">
+                  Login
+                </button>
+              </Link>
+            )}
+
+            {user && (
+              <Link to="/profile">
+                <div className="w-9 h-9 rounded-full bg-gray-700 text-white flex items-center justify-center cursor-pointer">
+                  {user.username[0].toUpperCase()}
+                </div>
+              </Link>
+            )}
 
             {/* menu btn */}
             <button
